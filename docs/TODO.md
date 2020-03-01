@@ -1,0 +1,11 @@
+- Get Docker + Docker Compose running
+  - Ruby
+  - Postgres
+- Get Rails talking with Postgres
+- CRUD for stories
+- Integrate TinyMCE
+- Preview for stories
+- CRUD for newsletters
+  - Building newsletters
+- Preview for newsletters
+- Inline styles for Lyra
