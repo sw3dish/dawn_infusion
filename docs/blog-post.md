@@ -1,0 +1,6 @@
+- What I did
+  - Started using the [Docker Compose docs](https://docs.docker.com/compose/rails/) to set up dev environment
+  - Went with Rails 6 because I wanted to use Rails 6 guide
+    - Had to modify Dockerfile slightly (add yarn)
+- What I would do
+  - Use slim images/alpine for size
