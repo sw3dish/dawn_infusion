@@ -1,0 +1,29 @@
+<%= form_with model: @newsletter, local: true do |form| %>
+
+  <% if @newsletter.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@newsletter.errors.count, "error") %>  prohibited this newsletter from being saved:
+      </h2>
+      <ul>
+        <% @newsletter.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :publish_date %>
+    <%= form.date_field :publish_date %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
