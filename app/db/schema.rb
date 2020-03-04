@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_184337) do
+ActiveRecord::Schema.define(version: 2020_03_04_203922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "newsletter_items", force: :cascade do |t|
+    t.bigint "story_id"
+    t.bigint "newsletter_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["newsletter_id"], name: "index_newsletter_items_on_newsletter_id"
+    t.index ["story_id"], name: "index_newsletter_items_on_story_id"
+  end
+
+  create_table "newsletters", force: :cascade do |t|
+    t.string "title"
+    t.datetime "publish_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "stories", force: :cascade do |t|
     t.string "title"
