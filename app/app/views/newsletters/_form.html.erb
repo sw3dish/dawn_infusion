@@ -23,6 +23,12 @@
   </p>
 
   <p>
+    <%= form.label :stories %>
+    <%= react_component 'StoriesMultiSelect', { stories: @stories,  selections: @newsletter.stories}%>
+    <%=  %>
+  </p>
+
+  <p>
     <%= form.submit %>
   </p>
 

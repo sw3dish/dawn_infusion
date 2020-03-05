@@ -1,0 +1,5 @@
+<%= @newsletter.title %>
+<%= @newsletter.publish_date %>
+<% @newsletter.stories.each do |story| %>
+  <%= story.title %>
+<% end %>
