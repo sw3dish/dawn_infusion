@@ -1,0 +1,19 @@
+<h1>Listing Newsletters</h1>
+
+<p><%= link_to 'New newsletter', new_newsletter_path %></p>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Publish Date</th>
+    <th colspan="3"></th>
+  </tr>
+  <% @newsletters.each do |newsletter| %>
+    <tr>
+      <td><%= newsletter.title %></td>
+      <td><%= newsletter.publish_date %></td>
+      <td><%= link_to 'Show', newsletter_path(newsletter) %></td>
+      <td><%= link_to 'Edit', edit_newsletter_path(newsletter) %></td>
+      <td><%= link_to 'Delete', newsletter_path(newsletter), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
+</table>

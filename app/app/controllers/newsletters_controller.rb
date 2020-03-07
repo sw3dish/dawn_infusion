@@ -9,27 +9,43 @@ class NewslettersController < ApplicationController
 
   def new
     @newsletter = Newsletter.new
-    @stories = Story.all
+  end
+
+  def edit
+    @newsletter = Newsletter.find(params[:id])
   end
 
   def create
+    puts params
     @newsletter = Newsletter.new(newsletter_params)
 
     if @newsletter.save
-      @newsletter.stories << Story.where(story_params)
       redirect_to @newsletter
     else
       render 'new'
     end
   end
 
+  def update
+    @newsletter = Newsletter.find(params[:id])
+
+    if @newsletter.update(newsletter_params)
+      redirect_to @newsletter
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @newsletter = Newsletter.find(params[:id])
+    @newsletter.destroy
+
+    redirect_to newsletters_path
+  end
+
   private
 
   def newsletter_params
-    params.require(:newsletter).permit(:title, :publish_date)
-  end
-
-  def story_params
-    params.require(:newsletter).permit(story_id: [])
+    params.require(:newsletter).permit(:title, :publish_date, story_ids: [])
   end
 end

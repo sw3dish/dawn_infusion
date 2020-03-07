@@ -24,8 +24,7 @@
 
   <p>
     <%= form.label :stories %>
-    <%= react_component 'StoriesMultiSelect', { stories: @stories,  selections: @newsletter.stories}%>
-    <%=  %>
+    <%= form.collection_select(:story_ids, Story.all, :id, :title, {},  {multiple: true})%>
   </p>
 
   <p>
