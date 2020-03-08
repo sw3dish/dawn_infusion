@@ -12,6 +12,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
+Provide a Lyra API key in `.env` using `.env.example`
+
 ```
 docker-compose build
 
