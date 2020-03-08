@@ -17,9 +17,11 @@ Provide a Lyra API key in `.env` using `.env.example`
 ```
 docker-compose build
 
+docker-compose run app yarn install --check-files
 docker-compose run app rake db:create
+docker-compose run app rake db:migrate
 
-docker-compose up -d
+docker-compose up
 ```
 
 ### Thought Process
