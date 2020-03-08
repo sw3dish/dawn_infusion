@@ -3,12 +3,14 @@
 <p><%= link_to 'New newsletter', new_newsletter_path %></p>
 <table>
   <tr>
+    <th>Lyra ID</th>
     <th>Title</th>
     <th>Publish Date</th>
     <th colspan="3"></th>
   </tr>
   <% @newsletters.each do |newsletter| %>
     <tr>
+      <td><%= newsletter.lyra_id %></td>
       <td><%= newsletter.title %></td>
       <td><%= newsletter.publish_date %></td>
       <td><%= link_to 'Preview', newsletter_path(newsletter) %></td>

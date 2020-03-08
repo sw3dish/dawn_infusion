@@ -29,6 +29,12 @@
 
   <p>
     <%= form.submit %>
+    <% if @newsletter.id %>
+      <% if @newsletter.lyra_id %>
+        <%= form.submit 'Update in Lyra', name: 'update_in_lyra' %>
+      <% else %>
+        <%= form.submit 'Post to Lyra', name: 'post_to_lyra' %>
+      <% end %>
+    <% end %>
   </p>
-
 <% end %>

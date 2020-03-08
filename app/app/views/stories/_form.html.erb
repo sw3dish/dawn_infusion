@@ -28,7 +28,16 @@
 
   <p>
     <%= form.submit %>
+    <% if @story.id %>
+      <% if @story.lyra_id %>
+        <%= form.submit 'Update in Lyra', name: 'update_in_lyra' %>
+      <% else %>
+        <%= form.submit 'Post to Lyra', name: 'post_to_lyra' %>
+      <% end %>
+    <% end %>
   </p>
+
+
 
   <script src="https://cdn.tiny.cloud/1/0grvgrqfv7wv27oo9ajzvjicput288t9kjqjbfc3gmctkijh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>

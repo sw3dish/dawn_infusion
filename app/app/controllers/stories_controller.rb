@@ -27,10 +27,48 @@ class StoriesController < ApplicationController
 
   def update
     @story = Story.find(params[:id])
+    permitted_params = story_params
 
-    if @story.update(story_params)
-      redirect_to @story
+    # if we pass validation
+    if permitted_params
+      # save the story in the DB
+      @story.update(permitted_params)
+
+      # if we should also interact with Lyra
+      if params[:post_to_lyra] || params[:update_in_lyra]
+        # set up our API wrapper
+        lyra = Lyra.new('stories')
+        # render the HTML to string
+        html = render_to_string("show", {:layout => false})
+        # inline the styles
+        document = Roadie::Document.new(html)
+        # ignore the media queries
+        document.keep_uninlinable_css = false
+        html_with_styles = document.transform
+
+        # the data that will be sent using the API
+        form_body = {
+          title: permitted_params[:title],
+          tag: permitted_params[:tag],
+          html: html_with_styles
+        }
+
+        if params[:post_to_lyra]
+          response = lyra.post(form_body)
+          # update the story with the Lyra UUID
+          @story.update(lyra_id: response['id'])
+        else
+          response = lyra.patch(@story.lyra_id, form_body)
+        end
+        render 'edit'
+      # if not,
+      else
+        # show us the updated story
+        redirect_to @story
+      end
+    # if we fail validation
     else
+      # bring us back to the edit screen
       render 'edit'
     end
   end

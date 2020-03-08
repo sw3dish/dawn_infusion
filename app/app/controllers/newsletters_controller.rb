@@ -1,3 +1,5 @@
+require 'lyra'
+
 class NewslettersController < ApplicationController
   def index
     @newsletters = Newsletter.all
@@ -16,7 +18,6 @@ class NewslettersController < ApplicationController
   end
 
   def create
-    puts params
     @newsletter = Newsletter.new(newsletter_params)
 
     if @newsletter.save
@@ -28,10 +29,48 @@ class NewslettersController < ApplicationController
 
   def update
     @newsletter = Newsletter.find(params[:id])
+    permitted_params = newsletter_params
 
-    if @newsletter.update(newsletter_params)
-      redirect_to @newsletter
+    # if we pass validation
+    if permitted_params
+      # save the newsletter in the DB
+      @newsletter.update(permitted_params)
+
+      # if we should interact with Lyra
+      if params[:post_to_lyra] || params[:update_in_lyra]
+        # create our API wrapper
+        lyra = Lyra.new('newsletters')
+        # render the HTML to string
+        html = render_to_string("show", {:layout => false})
+        # inline our styles
+        document = Roadie::Document.new(html)
+        # ignore media queries
+        document.keep_uninlinable_css = false
+        html_with_styles = document.transform
+
+        # form data that will be sent
+        form_body = {
+          date: permitted_params[:publish_date],
+          html: html_with_styles
+        }
+
+        if params[:post_to_lyra]
+          response = lyra.post(form_body)
+          # update the newsletter with the Lyra UUID
+          @newsletter.update(lyra_id: response['id'])
+        else
+          response = lyra.patch(@newsletter.lyra_id, form_body)
+        end
+
+        render 'edit'
+      # if not,
+      else
+        # show the updated newsletter
+        redirect_to @newsletter
+      end
+    # if validation fails
     else
+      # bring us back to the edit screen
       render 'edit'
     end
   end
