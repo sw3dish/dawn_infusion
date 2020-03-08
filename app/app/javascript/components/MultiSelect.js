@@ -1,8 +1,15 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
 
-const Select = ({selection, items, onChange}) => (
-  <select onChange={onChange} defaultValue={selection}>
+const Select = ({
+  selection,
+  items,
+  onChange
+}) => (
+  <select
+    onChange={onChange}
+    defaultValue={selection}
+    name={name}
+  >
     <option value="">Select a story</option>
     {items.map((item) => (
       <option
@@ -26,8 +33,8 @@ class MultiSelect extends React.Component {
   }
 
   addSelection(e) {
-    const selectedItem = this.props.items.filter((item) => item.value == e.target.value)[0];
-    if (!state.selections.includes(selectedItem)) {
+    const selectedItem = e.target.value;
+    if (!this.state.selections.includes(selectedItem)) {
       this.setState((state) => {
         const selections = state.selections.filter(selection => selection.value != '');
         return {
@@ -44,8 +51,8 @@ class MultiSelect extends React.Component {
     e.preventDefault();
     this.setState((state) => ({
       selections: [
-        '',
         ...state.selections,
+        '',
       ],
     }));
   }
@@ -54,7 +61,6 @@ class MultiSelect extends React.Component {
     const { selections } = this.state;
     const { items, id, name } = this.props;
     const selectionIds = selections.filter(selection => selection !== '');
-    console.log(selectionIds);
     return (
       <div>
         { selections.map((selection) => (
@@ -62,6 +68,7 @@ class MultiSelect extends React.Component {
             <Select
               selection={selection}
               items={items}
+              name={name}
               onChange={this.addSelection}
             />
           </div>
@@ -73,22 +80,6 @@ class MultiSelect extends React.Component {
             Add another
           </button>
         </div>
-        {/* This select is the select that is sent to Rails back-end */}
-        <select
-          name={name}
-          id={id}
-          value={selectionIds}
-          hidden
-          readOnly
-          multiple
-        >
-          {items.map((item) => (
-            <option
-              value={item.value}
-              key={item.value}
-            >{item.label}</option>
-          ))}
-        </select>
       </div>
     );
   }
