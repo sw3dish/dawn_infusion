@@ -39,6 +39,8 @@ docker-compose up -d
 
 ### Additions
 - Ensure that newsletters in Lyra are made of the same HTML that is in Lyra for all stories
+- Better Lyra API wrapper error handling
+  - Currently expects everything to return 200 :)
 - If Lyra acts like I think it does (acts like a central repository?)
   - I tightly coupled Lyra to the individual stories
     - Would break out Lyra interaction separately from the individual stories
