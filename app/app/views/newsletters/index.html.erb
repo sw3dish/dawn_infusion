@@ -11,7 +11,7 @@
     <tr>
       <td><%= newsletter.title %></td>
       <td><%= newsletter.publish_date %></td>
-      <td><%= link_to 'Show', newsletter_path(newsletter) %></td>
+      <td><%= link_to 'Preview', newsletter_path(newsletter) %></td>
       <td><%= link_to 'Edit', edit_newsletter_path(newsletter) %></td>
       <td><%= link_to 'Delete', newsletter_path(newsletter), method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
