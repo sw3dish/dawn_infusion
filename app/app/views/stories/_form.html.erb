@@ -1,13 +1,4 @@
 <%= form_with model: @story, local: true do |form| %>
-  <script src="https://cdn.tiny.cloud/1/0grvgrqfv7wv27oo9ajzvjicput288t9kjqjbfc3gmctkijh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>
-    tinymce.init({
-      selector: '#tiny-mce',
-      plugins: 'a11ychecker image table advtable link spellchecker powerpaste wordcount',
-      toolbar: 'image link | table | a11ycheck spellchecker',
-    });
-  </script>
-
   <% if @story.errors.any? %>
     <div id="error_explanation">
       <h2>
@@ -44,9 +35,4 @@
       <% end %>
     <% end %>
   </p>
-
-
-
-
-
 <% end %>
