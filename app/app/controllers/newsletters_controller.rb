@@ -82,6 +82,29 @@ class NewslettersController < ApplicationController
     redirect_to newsletters_path
   end
 
+  def preview_lyra
+    @newsletter = Newsletter.find(params[:id])
+
+    if @newsletter.lyra_id
+      lyra = Lyra.new('newsletters')
+      response = lyra.get(@newsletter.lyra_id)
+
+      @preview_html = response['attributes']['html'].html_safe
+      render 'lyra'
+    end
+  end
+
+  def delete_lyra
+    @story = Newsletter.find(params[:id])
+
+    if @newsletter.lyra_id
+      lyra = Lyra.new('newsletters')
+      lyra.delete(@newsletter.lyra_id)
+      @newsletter.update(lyra_id: nil)
+    end
+    render 'edit'
+  end
+
   private
 
   def newsletter_params

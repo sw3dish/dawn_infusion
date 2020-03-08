@@ -3,3 +3,7 @@
 <%= render 'form' %>
 
 <%= link_to 'Back', stories_path %>
+<% if @story.lyra_id  %>
+  <%= link_to 'Preview Lyra version', preview_lyra_story_path(@story) %>
+  <%= link_to 'Delete Lyra version', delete_lyra_story_path(@story), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% end %>

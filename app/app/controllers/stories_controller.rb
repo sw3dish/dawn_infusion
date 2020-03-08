@@ -80,6 +80,31 @@ class StoriesController < ApplicationController
     redirect_to stories_path
   end
 
+  def preview_lyra
+    @story = Story.find(params[:id])
+
+    if @story.lyra_id
+      lyra = Lyra.new('stories')
+      response = lyra.get(@story.lyra_id)
+
+      @preview_html = response['attributes']['html'].html_safe
+      render 'lyra'
+    else
+      render 'edit'
+    end
+  end
+
+  def delete_lyra
+    @story = Story.find(params[:id])
+
+    if @story.lyra_id
+      lyra = Lyra.new('stories')
+      lyra.delete(@story.lyra_id)
+      @story.update(lyra_id: nil)
+    end
+    render 'edit'
+  end
+
   private
 
   def story_params
