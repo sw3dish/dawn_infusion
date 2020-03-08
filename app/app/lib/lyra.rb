@@ -12,10 +12,12 @@ class Lyra
 
   def get(uuid=nil)
     if uuid
-      @conn.get(uuid)
+      response = @conn.get(uuid)
     else
-      @conn.get()
+      response = @conn.get()
     end
+    json = JSON.parse(response.body)
+    json["data"]
   end
 
   def post(args)
@@ -37,8 +39,9 @@ class Lyra
   end
 
   def delete(uuid)
-    url += "#{@url}#{uuid}"
-    @conn.delete(url)
+    response = @conn.delete(uuid)
+    json = JSON.parse(response.body)
+    json["data"]
   end
 
 end
