@@ -18,12 +18,25 @@
   </p>
 
   <p>
-    <%= form.label :html %>
-    <%= form.text_field :html %>
+    <%= form.label :tag %>
+    <%= form.text_field :tag %>
+  </p>
+
+  <p>
+    <%= form.text_area :html, :class => "tinymce", :rows => 40, :cols => 120, :id => "tiny-mce" %>
   </p>
 
   <p>
     <%= form.submit %>
   </p>
+
+  <script src="https://cdn.tiny.cloud/1/0grvgrqfv7wv27oo9ajzvjicput288t9kjqjbfc3gmctkijh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      selector: '#tiny-mce',
+      plugins: 'a11ychecker image table advtable link spellchecker powerpaste wordcount',
+      toolbar: 'image link | table | a11ycheck spellchecker',
+    })
+  </script>
 
 <% end %>
